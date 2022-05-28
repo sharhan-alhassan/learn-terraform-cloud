@@ -1,15 +1,63 @@
-# Terraform Cloud Getting Started Guide Example
+# Introduction
 
-This is an example Terraform configuration intended for use with the [Terraform Cloud Getting Started Guide](https://learn.hashicorp.com/terraform/cloud-gettingstarted/tfc_overview).
+```sh
+# Organization name
+clouditech
 
-## What will this do?
+# Workspace name
+cloudbintech-workspace
 
-This is a Terraform configuration that will create an EC2 instance in your AWS account. 
+```
 
-When you set up a Workspace on Terraform Cloud, you can link to this repository. Terraform Cloud can then run `terraform plan` and `terraform apply` automatically when changes are pushed. For more information on how Terraform Cloud interacts with Version Control Systems, see [our VCS documentation](https://www.terraform.io/docs/cloud/run/ui.html).
+# Set up
+```sh
+# Get token
+terraform login
 
-## What are the prerequisites?
+# token directory
+/home/sharhan/.terraform.d/credentials.tfrc.json
 
-You must have an AWS account and provide your AWS Access Key ID and AWS Secret Access Key to Terraform Cloud. Terraform Cloud encrypts and stores variables using [Vault](https://www.vaultproject.io/). For more information on how to store variables in Terraform Cloud, see [our variable documentation](https://www.terraform.io/docs/cloud/workspaces/variables.html).
+# Add AWS CREDENTIALS as environment variables and mark them as sensitive on the terraform cloud console
 
-The values for `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` should be saved as environment variables on your workspace.
+# Before you run terraform init, do this
+terraform login
+terraform init
+```
+
+# Change infrastructure
+```sh
+# You can modify the infrastructure via CLI with variables
+terrafrom apply -var="instance_type=t2.small"
+```
+
+# Use VCS-Driven Workflow
+```sh
+
+# This approach is to use your source control tool (eg; Github) to manage your terraform deployments 
+
+# 1. First comment the cloud section of your versions.tf file
+```
+```tf
+terraform {
+/*
+  cloud {
+    organization = "clouditech"
+
+    workspaces {
+      name = "learn-terraform-cloud"
+    }
+  }
+*/
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.28.0"
+    }
+  }
+
+  required_version = ">= 0.14.0"
+}
+```
+
+## NB: When using the VCS-driven workflow for Terraform Cloud, you do not need to define the cloud block in your configuration.
+
