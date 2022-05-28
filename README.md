@@ -63,7 +63,7 @@ terraform {
 
 ```sh
 # They inject environment variables to configuration. They are of lower precedence to Terraform Cloud set env variables
-
+ 
 # 
 
 ```
