@@ -64,6 +64,8 @@ terraform {
 ```sh
 # They inject environment variables to configuration. They are of lower precedence to Terraform Cloud set env variables
 
+# 
+
 ```
 
 ## NB: When using the VCS-driven workflow for Terraform Cloud, you do not need to define the cloud block in your configuration.
